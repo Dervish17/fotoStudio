@@ -24,10 +24,12 @@ class MainWindow(QMainWindow):
         label = QLabel('Войти как')
         label.setStyleSheet("QLabel {font: 24pt Arial; color: black; font-weight: bold;}")
         self.admin_btn = QPushButton('Администратор')
+        self.admin_btn.setFixedSize(150, 50)
         self.user_btn = QPushButton('Пользователь')
+        self.user_btn.setFixedSize(150, 50)
 
         button_style = """QPushButton {
-                                font-size: 16px; 
+                                font-size: 17px; 
                                 background-color: white; 
                                 color: black; 
                                 border: none; 
@@ -46,6 +48,8 @@ class MainWindow(QMainWindow):
         main_l = QVBoxLayout()
         h_l1 = QHBoxLayout()
         h_l2 = QHBoxLayout()
+        h_l3 = QHBoxLayout()
+        h_l4 = QHBoxLayout()
 
         h_l1.addStretch(2)
         h_l1.addWidget(label, 1)
@@ -53,12 +57,18 @@ class MainWindow(QMainWindow):
         h_l2.addStretch()
         h_l2.addWidget(picture_label)
         h_l2.addStretch()
+        h_l3.addStretch(1)
+        h_l3.addWidget(self.admin_btn)
+        h_l3.addStretch(1)
+        h_l4.addStretch(1)
+        h_l4.addWidget(self.user_btn)
+        h_l4.addStretch(1)
 
         main_l.addStretch()
         main_l.addLayout(h_l2)
         main_l.addLayout(h_l1)
-        main_l.addWidget(self.admin_btn)
-        main_l.addWidget(self.user_btn)
+        main_l.addLayout(h_l3)
+        main_l.addLayout(h_l4)
         main_l.addStretch()
 
         central_widget.setLayout(main_l)
