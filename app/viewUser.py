@@ -9,7 +9,7 @@ class ViewUser(QWidget):
 
     def initUI(self):
         self.setStyleSheet("background-color: #000000;")
-        self.setWindowTitle('Выбор фильма')
+        self.setWindowTitle('Выбор фотозоны')
         self.resize(800, 800)
         self.setWindowIcon(QIcon('resources/12.png'))
 
