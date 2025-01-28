@@ -28,3 +28,9 @@ class OrderService:
                                Room.room_name,
                                Equipment.equipment_type).join(Employee).join(Room).join(Equipment).all()
         return orders
+
+    def delete_order(self, screening_id):
+        with self.db.begin():
+            order_to_delete = self.db.query(Order).get(screening_id)
+            if order_to_delete:
+                self.db.delete(order_to_delete)

@@ -1,11 +1,13 @@
 from PyQt6.QtWidgets import QApplication
 from app.mainWin import MainWindow
+from database import init_db, SessionLocal
 import sys
 import traceback
 
 
 def main():
     app = QApplication([])
+    init_db()
     win = MainWindow()
     win.show()
     sys.exit(app.exec())
