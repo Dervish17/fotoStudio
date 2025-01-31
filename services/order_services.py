@@ -29,8 +29,23 @@ class OrderService:
                                Equipment.equipment_type).join(Employee).join(Room).join(Equipment).all()
         return orders
 
-    def delete_order(self, screening_id):
+    def delete_order(self, order_id):
         with self.db.begin():
-            order_to_delete = self.db.query(Order).get(screening_id)
+            order_to_delete = self.db.query(Order).get(order_id)
             if order_to_delete:
                 self.db.delete(order_to_delete)
+
+    def update_order(self, order_id: int, order_status: str,
+                         order_date: int, employee_id: int, room_id: int, equipment_id: int):
+        order = self.db.query(Order).filter(Order.order_id == order_id).first()
+        try:
+            if order:
+                order.order_status = order_status
+                order.order_date = order_date
+                order.employee_id = employee_id
+                order.room_id = room_id
+                order.equipment_id = equipment_id
+                self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            print(e)
