@@ -16,6 +16,7 @@ class OrderService:
                           employee_id=employee_id,
                           room_id=room_id,
                           equipment_id=equipment_id)
+
         self.db.add(new_order)
         self.db.commit()
         self.db.refresh(new_order)
