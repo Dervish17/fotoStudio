@@ -9,6 +9,5 @@ class Room(Base):
     room_id = Column(Integer, primary_key=True, index=True)
     room_name = Column(String, nullable=False)
     room_genre = Column(String, nullable=False)
-    room_price = Column(Integer, nullable=False)
 
     order = relationship('Order', back_populates='room')

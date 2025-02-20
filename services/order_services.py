@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
+from models.client import Client
 from models.employee import Employee
-from models.equipment import Equipment
 from models.order import Order
 from models.room import Room
 
@@ -10,12 +10,12 @@ class OrderService:
     def __init__(self, db: Session):
         self.db = db
 
-    def add_order(self, order_status: str, order_date: int, employee_id: int, room_id: int, equipment_id: int):
-        new_order = Order(order_status=order_status,
-                          order_date=order_date,
+    def add_order(self, client_id: int, employee_id: int, room_id: int, order_date: str, order_status: str):
+        new_order = Order(client_id=client_id,
                           employee_id=employee_id,
                           room_id=room_id,
-                          equipment_id=equipment_id)
+                          order_date=order_date,
+                          order_status=order_status)
 
         self.db.add(new_order)
         self.db.commit()
@@ -24,10 +24,11 @@ class OrderService:
 
     def all_orders(self):
         orders = self.db.query(Order.order_id,
-                               Order.order_status,
+                               Client.client_name,
+                               Client.client_surname,
                                Employee.employee_name,
                                Room.room_name,
-                               Equipment.equipment_type).join(Employee).join(Room).join(Equipment).all()
+                               Order.order_status).join(Client).join(Employee).join(Room).all()
         return orders
 
     def delete_order(self, order_id):
@@ -36,16 +37,16 @@ class OrderService:
             if order_to_delete:
                 self.db.delete(order_to_delete)
 
-    def update_order(self, order_id: int, order_status: str,
-                         order_date: int, employee_id: int, room_id: int, equipment_id: int):
+    def update_order(self, order_id: int, client_id: int, employee_id: int, room_id: int, order_date: str,
+                     order_status: str):
         order = self.db.query(Order).filter(Order.order_id == order_id).first()
         try:
             if order:
-                order.order_status = order_status
-                order.order_date = order_date
+                order.client_id = client_id
                 order.employee_id = employee_id
                 order.room_id = room_id
-                order.equipment_id = equipment_id
+                order.order_date = order_date
+                order.order_status = order_status
                 self.db.commit()
         except Exception as e:
             self.db.rollback()

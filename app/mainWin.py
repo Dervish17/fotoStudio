@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import (QWidget, QLabel, QMainWindow, QPushButton, QVBoxLay
 from PyQt6.QtGui import QIcon, QPixmap, QFont
 from app.authWindow import AuthWindow
 from app.viewUser import ViewUser
+# from app.userWin1 import UserWin
 
 
 class MainWindow(QMainWindow):
@@ -27,17 +28,17 @@ class MainWindow(QMainWindow):
         button_style = """
                             QPushButton {
                                 font-size: 16px; 
-                                background-color: white; 
+                                background-color: #ffb8c6; 
                                 color: black; 
                                 border: none; 
                                 padding: 10px; 
                                 border-radius: 5px;
                             }
                             QPushButton:hover {
-                                background-color: grey;
+                                background-color: #f0768b;
                             }
                             QPushButton:pressed {
-                                background-color: #3c3c3c;
+                                background-color: #ddadaf;
                             }
                         """
         self.user_btn.setStyleSheet(button_style)

@@ -3,16 +3,19 @@ from PyQt6.QtGui import QIcon, QFont
 from PyQt6.QtWidgets import (QWidget, QLabel, QPushButton, QVBoxLayout,
                              QHBoxLayout, QLineEdit, QMessageBox)
 
-# from app.adminInterfaceWin import AdminInterface
-from database import init_db, SessionLocal
+from database import SessionLocal
 from services.admin_services import AdminService
+# from services.employee_services import EmployeeService
+# from services.client_service import ClientService
+# from services.room_services import RoomService
+# from services.order_services import OrderService
+from app.buttonWin import ButtonWin
 
 
 class AuthWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        # self.init_db = init_db()
         self.db = SessionLocal()
 
     def initUI(self):
@@ -46,17 +49,17 @@ class AuthWindow(QWidget):
             """
                     QPushButton {
                         font-size: 16px; 
-                        background-color: white; 
-                        color: black; 
-                        border: none; 
-                        padding: 10px; 
-                        border-radius: 5px;
-                    }
-                    QPushButton:hover {
-                        background-color: grey;
-                    }
-                    QPushButton:pressed {
-                        background-color: #3c3c3c;
+                        background-color: #ffb8c6; 
+                                color: black; 
+                                border: none; 
+                                padding: 10px; 
+                                border-radius: 5px;
+                            }
+                            QPushButton:hover {
+                                background-color: #f0768b;
+                            }
+                            QPushButton:pressed {
+                                background-color: #ddadaf;
                     }
                 """)
         self.enter_btn.setFont(QFont('Monotype Corsiva'))
@@ -103,13 +106,12 @@ class AuthWindow(QWidget):
         self.enter_btn.clicked.connect(self.enter)
 
     def enter(self):
-        # init_db()
-        # db = SessionLocal()
         admin_service = AdminService(self.db)
         admins = admin_service.get_all_admins()
         for admin in admins:
             if admin.admin_login == self.login.text() and admin.admin_password == self.password.text():
-                print('Enter')
+                self.button_win = ButtonWin()
+                self.button_win.show()
                 # self.enter_admin = AdminInterface()
                 # self.enter_admin.show()
             else:

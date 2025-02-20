@@ -6,7 +6,7 @@ class AdminService:
     def __init__(self, db: Session):
         self.db = db
 
-    def add_admin(self, admin_login: str, admin_password: int):
+    def add_admin(self, admin_login: str, admin_password: str):
         new_admin = Admin(
             admin_login=admin_login,
             admin_password=admin_password,

@@ -8,7 +8,7 @@ class Employee(Base):
 
     employee_id = Column(Integer, primary_key=True, index=True)
     employee_name = Column(String, nullable=False)
-    equipment_id = Column(Integer, ForeignKey('equipments.equipments_id'))
+    employee_post = Column(String, nullable=False)
+    employee_tel = Column(String, nullable=False)
 
-    equipment = relationship('Equipment', back_populates='equipment')
     order = relationship('Order', back_populates='employee')

@@ -6,9 +6,9 @@ class RoomService:
     def __init__(self, db: Session):
         self.db = db
 
-    def add_room(self, room_genre: str, room_price: int):
-        new_room = Room(room_genre=room_genre,
-                        room_price=room_price)
+    def add_room(self, room_name: str, room_genre: str):
+        new_room = Room(room_name=room_name,
+                        room_genre=room_genre)
         self.db.add(new_room)
         self.db.commit()
         self.db.refresh(new_room)
