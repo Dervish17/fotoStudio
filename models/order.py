@@ -15,4 +15,4 @@ class Order(Base):
 
     employee = relationship('Employee', back_populates='order')
     room = relationship('Room', back_populates='order')
-    client = relationship('Client', backref='order')
+    client = relationship('Client', back_populates='order')

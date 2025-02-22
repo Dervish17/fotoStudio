@@ -13,3 +13,7 @@ class RoomService:
         self.db.commit()
         self.db.refresh(new_room)
         return new_room
+
+    def get_rooms(self):
+        rooms = self.db.query(Room).all()
+        return rooms

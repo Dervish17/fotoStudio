@@ -1,10 +1,14 @@
 from PyQt6.QtGui import QIcon, QPixmap, QFont
 from PyQt6.QtWidgets import (QWidget, QPushButton, QVBoxLayout, QLabel, QHBoxLayout, QMessageBox)
+from app.reserv1 import AddOrder
+from database import SessionLocal
+from services.room_services import RoomService
 
 class ViewUser(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
+        # self.db = SessionLocal()
 
     def initUI(self):
         self.setStyleSheet("background-color: #000000;")
@@ -16,20 +20,22 @@ class ViewUser(QWidget):
 
         photos_layout = QHBoxLayout()
 
+        rooms = self.get_all_rooms()
+
         self.image_labels = []
         self.buttons = []
 
-        photo_paths = [
-            "resources/1.jpg",
-            "resources/2.jpg",
-            "resources/3.jpg",
-            "resources/4.jpg",
-            "resources/5.jpg",
-        ]
+        # photo_paths = [
+        #     "resources/1.jpg",
+        #     "resources/2.jpg",
+        #     "resources/3.jpg",
+        #     "resources/4.jpg",
+        #     "resources/5.jpg",
+        # ]
 
-        for path in photo_paths:
+        for room in rooms:
             image_label = QLabel()
-            pixmap = QPixmap(path)
+            pixmap = QPixmap(room.room_path)
             pixmap = pixmap.scaled(250, 400)
             image_label.setPixmap(pixmap)
             self.image_labels.append(image_label)
@@ -51,7 +57,7 @@ class ViewUser(QWidget):
                                 background-color: #ddadaf;
                             }
             """)
-            button.clicked.connect(lambda _, p=path: self.book_photo(p))
+            button.clicked.connect(lambda _, r_id=room.room_id, r_name=room.room_name: self.book_photo(r_id, r_name))
             button.setFont(QFont('Monotype Corsiva'))
             self.buttons.append(button)
 
@@ -64,7 +70,12 @@ class ViewUser(QWidget):
         main_layout.addLayout(photos_layout)
         self.setLayout(main_layout)
 
-    def book_photo(self, photo_path):
-       # self.book = AddFilm()
-       # self.book.show()
-        pass
+    def get_all_rooms(self):
+        db = SessionLocal()
+        rooms = RoomService(db).get_rooms()
+        return rooms
+
+    def book_photo(self, room_id, room_name):
+        print(f'Забронирована {room_name}')
+        self.book = AddOrder(room_id, room_name)
+        self.book.show()

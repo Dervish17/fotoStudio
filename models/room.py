@@ -9,5 +9,6 @@ class Room(Base):
     room_id = Column(Integer, primary_key=True, index=True)
     room_name = Column(String, nullable=False)
     room_genre = Column(String, nullable=False)
+    room_path = Column(String)
 
     order = relationship('Order', back_populates='room')

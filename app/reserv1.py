@@ -4,17 +4,21 @@ from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QTimeEdit, QDateTimeE
     QVBoxLayout, QLabel, QMessageBox
 
 from database import SessionLocal
+from services.order_services import OrderService
+from services.client_service import ClientService
 
 class AddOrder(QWidget):
-    def __init__(self):
+    def __init__(self, room_id, room_name):
         super().__init__()
         self.initUI()
-        self.db = SessionLocal()
+        self.room_id = room_id
+        self.room_name = room_name
+        # self.db = SessionLocal()
 
     def initUI(self):
         self.setStyleSheet("background-color: #000000;")
         self.resize(600, 600)
-        self.setWindowTitle('Запись на съемку')
+        self.setWindowTitle(f'Запись на съемку в комнате')
         self.setWindowIcon(QIcon('resources/12.png'))
 
         style = """QPushButton {
@@ -38,6 +42,7 @@ class AddOrder(QWidget):
                     QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;
                     }
                                 """
+        # title_label = QLabel(f'Комната: {self.room_name}')
 
         name_label = QLabel("Укажите имя:")
         name_label.setStyleSheet(style)
@@ -90,6 +95,7 @@ class AddOrder(QWidget):
         layout_buttons.addWidget(self.button_cancel)
 
         main_layout = QVBoxLayout()
+        # main_layout.addWidget(title_label)
         main_layout.addWidget(name_label)
         main_layout.addWidget(self.text_name)
         main_layout.addWidget(surname_label)
