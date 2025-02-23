@@ -76,6 +76,5 @@ class ViewUser(QWidget):
         return rooms
 
     def book_photo(self, room_id, room_name):
-        print(f'Забронирована {room_name}')
         self.book = AddOrder(room_id, room_name)
         self.book.show()
