@@ -32,16 +32,18 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" object-ref="schemas/main/tables/rooms" />
-      <object connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" object-ref="schemas/main/tables/admins" />
+      <object connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" object-ref="schemas/main/tables/orders" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="91a1577c-87ed-4b7c-9027-2f20978650b2" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" dataset="main.clients" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" dataset="main.employees" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" dataset="main.admins" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" dataset="main.rooms" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="91a1577c-87ed-4b7c-9027-2f20978650b2" dataset="main.orders" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

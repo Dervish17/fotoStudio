@@ -19,3 +19,11 @@ class ClientService:
     def get_all_clients(self):
         clients = self.db.query(Client).all()
         return clients
+
+    def get_client_id_by_name(self, name, surname, tel):
+        client = self.db.query(Client).filter(Client.client_name == name,
+                                              Client.client_surname == surname,
+                                              Client.client_tel == tel).first()
+        if client:
+            return client
+        return None

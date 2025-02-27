@@ -18,3 +18,14 @@ class EmployeeService:
     def get_all_employees(self):
         employees = self.db.query(Employee).all()
         return employees
+
+    def get_names_employees(self):
+        names = [employee.employee_name for employee in self.db.query(Employee).all()]
+        return names
+
+    def get_employee_id_by_name(self, employee_name):
+        employee = self.db.query(Employee).filter(Employee.employee_name == employee_name).first()
+        if employee:
+            return employee.employee_id
+        else:
+            return None

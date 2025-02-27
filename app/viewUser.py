@@ -1,6 +1,6 @@
 from PyQt6.QtGui import QIcon, QPixmap, QFont
 from PyQt6.QtWidgets import (QWidget, QPushButton, QVBoxLayout, QLabel, QHBoxLayout, QMessageBox)
-from app.reserv1 import AddOrder
+from app.addClientWin import AddClient
 from database import SessionLocal
 from services.room_services import RoomService
 
@@ -76,5 +76,5 @@ class ViewUser(QWidget):
         return rooms
 
     def book_photo(self, room_id, room_name):
-        self.book = AddOrder(room_id, room_name)
+        self.book = AddClient(room_id, room_name)
         self.book.show()
