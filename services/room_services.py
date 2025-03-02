@@ -17,3 +17,11 @@ class RoomService:
     def get_rooms(self):
         rooms = self.db.query(Room).all()
         return rooms
+
+    def room_names(self):
+        room_names = [f"{room.room_name} ({room.room_genre})" for room in self.get_rooms()]
+        return room_names
+
+    def get_room_id_by_name(self, name):
+        room = self.db.query(Room).filter(Room.room_name == name).first()
+        return room.id

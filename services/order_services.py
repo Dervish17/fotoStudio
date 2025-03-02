@@ -28,6 +28,7 @@ class OrderService:
                                Client.client_surname,
                                Employee.employee_name,
                                Room.room_name,
+                               Order.order_date,
                                Order.order_status).join(Client).join(Employee).join(Room).all()
         return orders
 

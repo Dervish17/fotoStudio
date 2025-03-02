@@ -1,8 +1,7 @@
-from PyQt6.QtCore import QDateTime
 from PyQt6.QtGui import QIcon, QFont
 from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QDateTimeEdit, QPushButton, QHBoxLayout, \
     QVBoxLayout, QLabel, QMessageBox
-from app.reserv1 import AddOrder
+from app.reservWin import AddOrder
 from database import SessionLocal
 from services.client_service import ClientService
 
@@ -87,16 +86,16 @@ class OldClient(QWidget):
     def add_order(self):
         db = SessionLocal()
         client_service = ClientService(db)
-        clients = client_service.get_all_clients()
-        for client in clients:
-            if client.client_name == self.text_name.text() and client.client_surname == self.text_surname.text() and client.client_tel == self.text_tel.text():
-                client = client_service.get_client_id_by_name(self.text_name.text(),
-                                                              self.text_surname.text(),
-                                                              self.text_tel.text())
-                self.book = AddOrder(self.room_id, self.room_name, client)
-                self.book.show()
-            else:
-                QMessageBox.information(self, 'Ошибка', 'Клиент с такими данными не найден')
+
+        client = client_service.get_client_by_details(self.text_name.text(),
+                                                      self.text_surname.text(),
+                                                      self.text_tel.text())
+
+        if client:
+            self.book = AddOrder(self.room_id, self.room_name, client)
+            self.book.show()
+        else:
+            QMessageBox.information(self, 'Ошибка', 'Клиент с такими данными не найден')
 
     def cancellation(self):
         self.close()

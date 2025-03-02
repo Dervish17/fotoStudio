@@ -27,3 +27,14 @@ class ClientService:
         if client:
             return client
         return None
+
+    def get_client_by_details(self, name, surname, tel):
+        client = self.db.query(Client).filter(Client.client_name == name,
+                                              Client.client_surname == surname,
+                                              Client.client_tel == tel).first()
+        return client
+
+    def get_client_by_name(self, name, surname):
+        client = self.db.query(Client).filter(Client.client_name == name,
+                                              Client.client_surname == surname).all()
+        return client

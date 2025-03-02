@@ -1,6 +1,6 @@
 from PyQt6.QtGui import QIcon, QFont
 from PyQt6.QtWidgets import QWidget, QPushButton, QVBoxLayout, QHBoxLayout
-from app.reserv1 import AddOrder
+from app.reservWin import AddOrder
 
 class ButtonWin(QWidget):
     def __init__(self):

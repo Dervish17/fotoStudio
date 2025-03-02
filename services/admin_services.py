@@ -19,3 +19,7 @@ class AdminService:
     def get_all_admins(self):
         admins = self.db.query(Admin).all()
         return admins
+
+    def get_admin_by_details(self, admin_login: str, admin_password: str):
+        admin = self.db.query(Admin).filter(Admin.admin_login == admin_login, Admin.admin_password == admin_password).first()
+        return admin

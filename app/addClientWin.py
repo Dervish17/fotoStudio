@@ -5,12 +5,12 @@ from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QDateTimeEdit, QPushB
 
 from database import SessionLocal
 from services.client_service import ClientService
-from app.reserv1 import AddOrder
+from app.reservWin import AddOrder
 from app.oldClientWin import OldClient
 
 
 class AddClient(QWidget):
-    def __init__(self, room_id, room_name):
+    def __init__(self, room_id=None, room_name=None):
         super().__init__()
 
         self.room_id = room_id
