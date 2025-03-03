@@ -1,5 +1,5 @@
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QDateTimeEdit, QPushButton, QHBoxLayout, \
+from PyQt6.QtWidgets import QWidget, QLineEdit, QPushButton, QHBoxLayout, \
     QVBoxLayout, QLabel, QMessageBox
 from app.reservWin import AddOrder
 from database import SessionLocal
@@ -90,7 +90,6 @@ class OldClient(QWidget):
         client = client_service.get_client_by_details(self.text_name.text(),
                                                       self.text_surname.text(),
                                                       self.text_tel.text())
-
         if client:
             self.book = AddOrder(self.room_id, self.room_name, client)
             self.book.show()

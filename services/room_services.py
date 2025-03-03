@@ -19,9 +19,9 @@ class RoomService:
         return rooms
 
     def room_names(self):
-        room_names = [f"{room.room_name} ({room.room_genre})" for room in self.get_rooms()]
+        room_names = [room.room_name for room in self.get_rooms()]
         return room_names
 
     def get_room_id_by_name(self, name):
         room = self.db.query(Room).filter(Room.room_name == name).first()
-        return room.id
+        return room.room_id

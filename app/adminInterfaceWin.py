@@ -1,11 +1,16 @@
-from PyQt6.QtGui import QIcon, QFont
+from turtledemo.chaos import coosys
+
+from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QWidget, QTableWidget, QPushButton, QHBoxLayout, QVBoxLayout, QTableWidgetItem, QHeaderView, \
     QMessageBox
 from database import SessionLocal
 from services.order_services import OrderService
-from app.addClientWin import AddClient
-from app.reservWin import AddOrder
 from app.adminOrderWin import AddAdminOrder
+
+
+class Communicate(QObject):
+    update_signal = pyqtSignal()
 
 
 class AdminInterface(QWidget):
@@ -20,26 +25,26 @@ class AdminInterface(QWidget):
         self.setStyleSheet("background-color: #000000;")
         self.setWindowIcon(QIcon('resources/12.png'))
         style = """QPushButton {
-                                                font-size: 16px; 
-                                                background-color: #ffb8c6; 
-                                                color: black; 
-                                                border: none; 
-                                                padding: 10px; 
-                                                border-radius: 5px;
-                                            }
-                                            QPushButton:hover {
-                                                background-color: #f0768b;
-                                            }
-                                            QPushButton:pressed {
-                                                background-color: #ddadaf;
-                                            }
-                            QLabel {font: 15pt Monotype Corsiva; color: white;
-                            }
-                            QLineEdit{border: 1px solid white; padding: 5px; font: 12pt Monotype Corsiva; color: white;
-                            }
-                            QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;}
-                            QComboBox{font: 12pt Monotype Corsiva; color: white;
-                            }
+                                font-size: 16px; 
+                                background-color: #ffb8c6; 
+                                color: black; 
+                                border: none; 
+                                padding: 10px; 
+                                border-radius: 5px;
+                                }
+                                QPushButton:hover {
+                                    background-color: #f0768b;
+                                }
+                                QPushButton:pressed {
+                                    background-color: #ddadaf;
+                                }
+                                QLabel {font: 15pt Monotype Corsiva; color: white;
+                                }
+                                QLineEdit{border: 1px solid white; padding: 5px; font: 12pt Monotype Corsiva; color: white;
+                                }
+                                QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;}
+                                QComboBox{font: 12pt Monotype Corsiva; color: white;
+                                }
                                         """
 
         self.table = QTableWidget()
@@ -71,23 +76,20 @@ class AdminInterface(QWidget):
         self.button_delete.setStyleSheet(style)
         self.button_delete.clicked.connect(self.delete_order)
 
-        # self.button_add_order = QPushButton('Добавить запись')
-        # self.button_add_order.setStyleSheet(style)
-        # self.button_add_order.clicked.connect(self.add_order)
-
         self.button_change = QPushButton('Изменить Запись')
         self.button_change.setStyleSheet(style)
         self.button_change.clicked.connect(self.change_order)
 
         layout_buttons = QHBoxLayout()
         layout_buttons.addWidget(self.button_delete)
-        # layout_buttons.addWidget(self.button_add_order)
         layout_buttons.addWidget(self.button_change)
 
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.table)
         main_layout.addLayout(layout_buttons)
 
+        self.communicate = Communicate()
+        self.communicate.update_signal.connect(self.show_orders)
         self.setLayout(main_layout)
 
     def show_orders(self):
@@ -149,12 +151,7 @@ class AdminInterface(QWidget):
             data.append(self.table.item(row, 4).text())
             data.append(self.table.item(row, 5).text())
         return data
-    #
-    # def add_order(self):
-    #     self.add_order = AddClient()
-    #     self.add_order.show()
-    #
+
     def change_order(self):
-        self.change = AddAdminOrder(self.on_table_row_selected())
-        print(self.on_table_row_selected())
+        self.change = AddAdminOrder(self.on_table_row_selected(), communicate=self.communicate)
         self.change.show()

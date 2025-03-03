@@ -1,5 +1,5 @@
 from PyQt6.QtGui import QIcon, QPixmap, QFont
-from PyQt6.QtWidgets import (QWidget, QPushButton, QVBoxLayout, QLabel, QHBoxLayout, QMessageBox)
+from PyQt6.QtWidgets import QWidget, QPushButton, QVBoxLayout, QLabel, QHBoxLayout
 from app.addClientWin import AddClient
 from database import SessionLocal
 from services.room_services import RoomService
@@ -8,7 +8,6 @@ class ViewUser(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        # self.db = SessionLocal()
 
     def initUI(self):
         self.setStyleSheet("background-color: #000000;")
@@ -24,14 +23,6 @@ class ViewUser(QWidget):
 
         self.image_labels = []
         self.buttons = []
-
-        # photo_paths = [
-        #     "resources/1.jpg",
-        #     "resources/2.jpg",
-        #     "resources/3.jpg",
-        #     "resources/4.jpg",
-        #     "resources/5.jpg",
-        # ]
 
         for room in rooms:
             image_label = QLabel()

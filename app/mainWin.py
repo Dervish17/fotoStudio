@@ -1,9 +1,8 @@
 from PyQt6.QtWidgets import (QWidget, QLabel, QMainWindow, QPushButton, QVBoxLayout,
                              QHBoxLayout, QApplication)
-from PyQt6.QtGui import QIcon, QPixmap, QFont
+from PyQt6.QtGui import QIcon, QFont
 from app.authWindow import AuthWindow
 from app.viewUser import ViewUser
-# from app.userWin1 import UserWin
 
 
 class MainWindow(QMainWindow):

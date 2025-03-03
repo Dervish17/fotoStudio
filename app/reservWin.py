@@ -1,8 +1,7 @@
 from PyQt6.QtCore import QDateTime
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QDateTimeEdit, QPushButton, QHBoxLayout, \
+from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QPushButton, QHBoxLayout, \
     QVBoxLayout, QLabel, QMessageBox
-
 from database import SessionLocal
 from services.order_services import OrderService
 from services.client_service import ClientService
@@ -26,27 +25,27 @@ class AddOrder(QWidget):
         self.setWindowIcon(QIcon('resources/12.png'))
 
         style = """QPushButton {
-                                        font-size: 16px; 
-                                        background-color: #ffb8c6; 
-                                        color: black; 
-                                        border: none; 
-                                        padding: 10px; 
-                                        border-radius: 5px;
-                                    }
-                                    QPushButton:hover {
-                                        background-color: #f0768b;
-                                    }
-                                    QPushButton:pressed {
-                                        background-color: #ddadaf;
-                                    }
-                    QLabel {font: 15pt Monotype Corsiva; color: white;
-                    }
-                    QLineEdit{border: 1px solid white; padding: 5px; font: 12pt Monotype Corsiva; color: white;
-                    }
-                    QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;}
-                    QComboBox{font: 12pt Monotype Corsiva; color: white;
-                    }
-                                """
+                                font-size: 16px; 
+                                background-color: #ffb8c6; 
+                                color: black; 
+                                border: none; 
+                                padding: 10px; 
+                                border-radius: 5px;
+                                }
+                                QPushButton:hover {
+                                    background-color: #f0768b;
+                                }
+                                QPushButton:pressed {
+                                    background-color: #ddadaf;
+                                }
+                                QLabel {font: 15pt Monotype Corsiva; color: white;
+                                }
+                                QLineEdit{border: 1px solid white; padding: 5px; font: 12pt Monotype Corsiva; color: white;
+                                }
+                                QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;}
+                                QComboBox{font: 12pt Monotype Corsiva; color: white;
+                                }
+                                            """
         name_label = QLabel("Укажите имя:")
         name_label.setStyleSheet(style)
         self.text_name = QLineEdit()

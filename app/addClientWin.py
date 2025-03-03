@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QDateTime
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QDateTimeEdit, QPushButton, QHBoxLayout, \
+from PyQt6.QtWidgets import QWidget, QLineEdit, QPushButton, QHBoxLayout, \
     QVBoxLayout, QLabel, QMessageBox
 
 from database import SessionLocal

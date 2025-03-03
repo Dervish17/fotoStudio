@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QDateTime
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QDateTimeEdit, QPushButton, QHBoxLayout, \
+from PyQt6.QtWidgets import QWidget, QLineEdit, QComboBox, QPushButton, QHBoxLayout, \
     QVBoxLayout, QLabel, QMessageBox
 
 from database import SessionLocal
@@ -11,9 +11,10 @@ from services.room_services import RoomService
 
 
 class AddAdminOrder(QWidget):
-    def __init__(self, data=None):
+    def __init__(self, data=None, communicate=None):
         super().__init__()
         self.data = data
+        self.communicate = communicate
         self.initUI()
         if self.data:
             self.upload_editable_data()
@@ -25,26 +26,26 @@ class AddAdminOrder(QWidget):
         self.setWindowIcon(QIcon('resources/12.png'))
 
         style = """QPushButton {
-                                        font-size: 16px; 
-                                        background-color: #ffb8c6; 
-                                        color: black; 
-                                        border: none; 
-                                        padding: 10px; 
-                                        border-radius: 5px;
-                                    }
-                                    QPushButton:hover {
-                                        background-color: #f0768b;
-                                    }
-                                    QPushButton:pressed {
-                                        background-color: #ddadaf;
-                                    }
-                    QLabel {font: 15pt Monotype Corsiva; color: white;
-                    }
-                    QLineEdit{border: 1px solid white; padding: 5px; font: 12pt Monotype Corsiva; color: white;
-                    }
-                    QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;}
-                    QComboBox{font: 12pt Monotype Corsiva; color: white;
-                    }
+                                font-size: 16px; 
+                                background-color: #ffb8c6; 
+                                color: black; 
+                                border: none; 
+                                padding: 10px; 
+                                border-radius: 5px;
+                                }
+                                QPushButton:hover {
+                                    background-color: #f0768b;
+                                }
+                                QPushButton:pressed {
+                                    background-color: #ddadaf;
+                                }
+                                QLabel {font: 15pt Monotype Corsiva; color: white;
+                                }
+                                QLineEdit{border: 1px solid white; padding: 5px; font: 12pt Monotype Corsiva; color: white;
+                                }
+                                QDateTimeEdit{font: 12pt Monotype Corsiva; color: white;}
+                                QComboBox{font: 12pt Monotype Corsiva; color: white;
+                                }
                                 """
         name_label = QLabel("Укажите имя:")
         name_label.setStyleSheet(style)
@@ -66,13 +67,6 @@ class AddAdminOrder(QWidget):
         self.text_tel.setMaxLength(50)
         self.text_tel.setPlaceholderText("Введите телефон")
         self.text_tel.setStyleSheet(style)
-
-        # email_label = QLabel("Укажите имейл:")
-        # email_label.setStyleSheet(style)
-        # self.text_email = QLineEdit()
-        # self.text_email.setMaxLength(50)
-        # self.text_email.setPlaceholderText("Введите имейл")
-        # self.text_email.setStyleSheet(style)
 
         employee_label = QLabel("Выберите фотографа:")
         employee_label.setStyleSheet(style)
@@ -118,8 +112,6 @@ class AddAdminOrder(QWidget):
         main_layout.addWidget(self.text_surname)
         main_layout.addWidget(tel_label)
         main_layout.addWidget(self.text_tel)
-        # main_layout.addWidget(email_label)
-        # main_layout.addWidget(self.text_email)
         main_layout.addWidget(employee_label)
         main_layout.addWidget(self.employee_combo)
         main_layout.addWidget(room_label)
@@ -147,21 +139,16 @@ class AddAdminOrder(QWidget):
         name = self.text_name.text()
         surname = self.text_surname.text()
         tel = self.text_tel.text()
-        # email = self.text_email.text()
         employee_name = self.employee_combo.currentText()
         session_datetime = self.session_datetime.text()
         status = self.status_combo.currentText()
 
-        # if not name.strip() or not surname.strip() or not tel.strip() or not email.strip():
-        #     QMessageBox.information(self, "Ошибка", "Заполните все поля!")
-        #     return
         db = SessionLocal()
         order_service = OrderService(db)
         client_service = ClientService(db)
         employee_service = EmployeeService(db)
         room_service = RoomService(db)
-        room_id = room_service.get_room_id_by_name(
-            f"{self.room_combo.currentText().split(' ')[0]} {self.room_combo.currentText().split(' ')[1]}")
+        room_id = room_service.get_room_id_by_name(self.room_combo.currentText())
         client = client_service.get_client_id_by_name(name, surname, tel)
         try:
             order_service.update_order(order_id=self.order_id,
@@ -171,15 +158,11 @@ class AddAdminOrder(QWidget):
                                        order_date=session_datetime,
                                        order_status=status)
             QMessageBox.information(self, "Успех", "Запись на съемку изменена!")
+            self.communicate.update_signal.emit()
+            self.close()
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Ошибка при добавлении заявки: {str(e)}")
             print(e)
-
-    def get_client(self):
-        db = SessionLocal()
-        client_service = ClientService(db)
-        client = client_service.get_client_by_name(self.data[1].split(' ')[0], self.data[1].split(' ')[1])
-        return client
 
     def upload_editable_data(self):
         self.order_id = self.data[0]

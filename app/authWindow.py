@@ -1,6 +1,5 @@
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import (QWidget, QLabel, QPushButton, QVBoxLayout,
-                             QHBoxLayout, QLineEdit, QMessageBox)
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QLineEdit, QMessageBox
 
 from database import SessionLocal
 from services.admin_services import AdminService
