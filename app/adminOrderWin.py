@@ -89,7 +89,7 @@ class AddAdminOrder(QWidget):
         status_label.setStyleSheet(style)
         self.status_combo = QComboBox()
         self.status_combo.setStyleSheet(style)
-        self.status_combo.addItems(['Активна', 'Отменена'])
+        self.status_combo.addItems(['Активна', 'Отменена', 'Завершена'])
 
         self.button_update = QPushButton('Изменить')
         self.button_update.setStyleSheet(style)
